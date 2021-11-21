@@ -11,7 +11,7 @@ class DivisionController extends Controller
 {
     public function show($id)
     {
-        $model = Division::findOrFail($id);
+        $model = Division::find($id);
         return response()->json(['code' => 200, 'data' => $model]);
     }
 
@@ -33,9 +33,13 @@ class DivisionController extends Controller
 
     public function delete($id)
     {
-        $model = Division::findOrFail($id);
-        $model->delete();
-        return response()->json(['code' => 200, 'msj' => 'Division removida exitosamente']);
+        $msj = 'No existe division para eliminar';
+        $model = Division::find($id);
+        if($model){
+            $model->delete();
+            $msj = 'Division removida exitosamente';
+        }
+        return response()->json(['code' => 200, 'msj' => $msj]);
     }
 
     public function update(DivisionRequest $request)
