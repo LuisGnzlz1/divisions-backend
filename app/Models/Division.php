@@ -13,7 +13,7 @@ class Division extends Model
 
     protected $fillable = ['name', 'parent_division_id', 'level', 'collaborators', 'ambassador'];
 
-    public $appends = ['parent_division_name'];
+    public $appends = ['parent_division_name', 'subdivisions'];
 
 
     public function getParentDivisionNameAttribute()
@@ -25,6 +25,11 @@ class Division extends Model
             $parentName = $model->name;
         }
         return $parentName;
+    }
+
+    public function getSubdivisionsAttribute()
+    {
+        return Model::where('parent_division_id', $this->id)->get();
     }
 
 }

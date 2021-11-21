@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DivisionRequest;
+use App\Http\Requests\ListSubdivisionRequest;
 use App\Models\Division;
 use DB;
 
@@ -66,8 +67,10 @@ class DivisionController extends Controller
 
     public function listSubdivision($id)
     {
-        return view('user.profile', [
-            'user' => User::findOrFail($id)
-        ]);
+        $model = [];
+        if(is_numeric($id)){
+            $model = Division::where('parent_division_id', $id)->get();
+        }
+        return response()->json(['code' => 200, 'data' => $model]);
     }
 }
