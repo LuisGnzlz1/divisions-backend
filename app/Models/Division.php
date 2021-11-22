@@ -13,8 +13,13 @@ class Division extends Model
 
     protected $fillable = ['name', 'parent_division_id', 'level', 'collaborators', 'ambassador'];
 
-    public $appends = ['parent_division_name', 'subdivisions'];
+    public $appends = ['parent_division_name', 'subdivisions', 'key'];
 
+
+    public function getKeyAttribute()
+    {
+        return $this->id;
+    }
 
     public function getParentDivisionNameAttribute()
     {
